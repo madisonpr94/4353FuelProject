@@ -12,6 +12,14 @@
 
         <link href="../public/css/common.css" rel="stylesheet">
         <link href="../public/css/quote.css" rel="stylesheet">
+
+        <script>
+        var updateTotal = function(obj) {
+            var totalField = document.getElementById("total-price")
+            var unitPrice = parseFloat(document.getElementById("unit-price").value.substring(1));
+            totalField.value = "$" + (obj.value * unitPrice).toFixed(2);
+        }            
+        </script>
     </head>
     <body class="text-center">
         <div class="d-flex flex-column justify-content-between align-items-end w-100" style="min-height: 100vh;">
@@ -19,9 +27,9 @@
                     <a class="navbar-brand" href="#">FuelQuote</a>  
                     <a class="nav-item nav-link" href="./index.html">Home</a>
                     <a class="nav-item nav-link" href="./profile.html">Profile</a>
-                    <a class="active nav-item nav-link" href="./quote_request.html">Request Quote</a>
+                    <a class="active nav-item nav-link" href="#">Request Quote</a>
                     <a class="nav-item nav-link" href="./quote_history.html">View History</a>
-                    <a class="nav-item nav-link" href="./index.html">Logout</a>
+                    <a class="nav-item nav-link" href="./index.html">Log Out</a>
                     <span class="ml-auto">
                         <p class="foot mb-0 mr-1">Logged in as: $(username)</p>
                     </span>
@@ -39,12 +47,12 @@
                             </div>
                             <div class="d-flex flex-row justify-content-between w-100">
                                 <div class="form-group m-1 w-50">
-                                    <label class="col-form-label w-100 text-left" for="first-name">Gallons Requested: *</label><br>
-                                    <input type="number" name="gallons" class="form-control-sm w-100" required>
+                                    <label class="col-form-label w-100 text-left" for="gallons">Gallons Requested: *</label><br>
+                                    <input type="number" name="gallons" class="form-control-sm w-100" value=0 onchange="updateTotal(this)" required>
                                 </div>
                                 <div class="form-group m-1 w-50">
-                                    <label class="col-form-label w-100 text-left" for="last-name">Delivery Date *</label><br>
-                                    <input type="date" name="last-name" class="form-control-sm w-100" required>
+                                    <label class="col-form-label w-100 text-left" for="delivery-date">Delivery Date *</label><br>
+                                    <input type="date" name="delivery-date" class="form-control-sm w-100" required>
                                 </div>
                             </div>
                             <div class="form-group m-1 mt-4">
@@ -52,19 +60,19 @@
                             </div>
                             <div class="form-group m-1">
                                 <label class="col-form-label w-100 text-left" for="address-1">Address, Line 1</label><br>
-                                <input type="text" name="address-1" class="form-control-sm w-100" size=48 maxlength=100 required disabled value="123 Example St.">
+                                <input type="text" id="address-1" name="address-1" class="form-control-sm w-100" size=50 maxlength=100 required disabled value="123 Example St.">
                             </div>
                             <div class="form-group m-1">
                                 <label class="col-form-label w-100 text-left" for="address-2">Address, Line 2</label><br>
-                                <input type="text" name="address-2" class="form-control-sm w-100" size=48 maxlength=100 disabled>
+                                <input type="text" id="address-2" name="address-2" class="form-control-sm w-100" size=50 maxlength=100 disabled>
                             </div>
                             <div class="d-flex flex-row justify-content-between w-100">
                                 <div class="form-group m-1 w-50">
-                                    <label class="col-form-label w-100 text-left" for="first-name">City Name</label><br>
-                                    <input type="text" name="first-name" class="form-control-sm" required maxlength=100 disabled value="Placeholder">
+                                    <label class="col-form-label w-100 text-left" for="city-name">City Name</label><br>
+                                    <input type="text" id="city-name" name="city-name" class="form-control-sm" required maxlength=100 disabled value="Placeholder">
                                 </div>
                                 <div class="form-group m-1 w-50 flex-grow-1">
-                                    <label class="col-form-label w-100 text-left" for="last-name">State</label><br>
+                                    <label class="col-form-label w-100 text-left" for="state">State</label><br>
                                     <select class="form-control-sm w-100" name="state" disabled>
                                         <option>Alabama</option>
                                         <option>Alaska</option>
@@ -83,12 +91,12 @@
                             </div>
                             <div class="d-flex flex-row justify-content-between w-100">
                                 <div class="form-group m-1 w-50">
-                                    <label class="col-form-label w-100 text-left" for="first-name">Estimated Price per Gallon</label><br>
-                                    <input type="text" name="gallons" class="form-control-sm w-100" required disabled value="$1.71">
+                                    <label class="col-form-label w-100 text-left" for="unit-price">Estimated Price per Gallon</label><br>
+                                    <input type="text" id="unit-price" name="unit-price" class="form-control-sm w-100" required disabled value="$1.71">
                                 </div>
                                 <div class="form-group m-1 w-50">
-                                    <label class="col-form-label w-100 text-left" for="last-name">Estimated Total</label><br>
-                                    <input type="text" name="last-name" class="form-control-sm w-100" required disabled value="$7695.00">
+                                    <label class="col-form-label w-100 text-left" for="total-price">Estimated Total</label><br>
+                                    <input type="text" id="total-price" name="total-price" class="form-control-sm w-100" required disabled value="$7695.00">
                                 </div>
                             </div>
                             <div class="form-group m-1">
