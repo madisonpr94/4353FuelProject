@@ -10,3 +10,8 @@ urlpatterns = [
     path('profile.html', views.profile_page, name='profile_page'),
     # path('login.html/index.html', views.index_page, name='index_page')
 ]
+
+urlpatterns += [
+    path('quote_request.html', views.quote_page, name="quote_page"),
+    path('price_module', views.price_module, name='price_module')
+]
