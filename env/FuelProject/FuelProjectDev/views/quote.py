@@ -1,10 +1,13 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, reverse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import Context, loader
 from datetime import datetime, timedelta
 
 
 def quote_page(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('login_page'))
+
     states = [
         "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado",
         "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho",
