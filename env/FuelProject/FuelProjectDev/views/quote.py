@@ -6,7 +6,8 @@ from datetime import datetime, timedelta
 
 def quote_page(request):
     if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse('login_page'))
+        return HttpResponseRedirect(reverse('login_page',
+                                    kwargs={'redirect_not_logged_in': True}))
 
     states = [
         "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado",

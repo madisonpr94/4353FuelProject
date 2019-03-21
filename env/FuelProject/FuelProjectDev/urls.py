@@ -12,6 +12,11 @@ urlpatterns = [
 ]
 
 urlpatterns += [
+    path('login.html', views.login_page, name='login_page',
+         kwargs={'redirect_not_logged_in': True})
+]
+
+urlpatterns += [
     path('quote_request.html', views.quote_page, name="quote_page"),
     path('price_module', views.price_module, name='price_module')
 ]
