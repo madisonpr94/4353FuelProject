@@ -3,11 +3,13 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import Context, loader
 from datetime import datetime, timedelta
 
+from .util import *
+
 
 def quote_page(request):
     if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse('login_page',
-                                    kwargs={'redirect_not_logged_in': True}))
+        return redirect_with_GET('login_page',
+                                 kwargs={"redirect_not_logged_in": True})
 
     states = [
         "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado",

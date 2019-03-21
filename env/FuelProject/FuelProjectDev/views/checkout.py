@@ -3,7 +3,6 @@ from django.http import HttpResponse
 from django.template import Context, loader
 
 
-def login_page(request):
-    context = {}
+def checkout_page(request):
 
-    return render(request, 'FuelProjectDev/login.html', context)
+    return render(request, 'FuelProjectDev/index.html')
