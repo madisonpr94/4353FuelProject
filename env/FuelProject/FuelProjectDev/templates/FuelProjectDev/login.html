@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -10,8 +11,8 @@
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>           
     
-            <link href="../public/css/common.css" rel="stylesheet">
-            <link href="../public/css/login.css" rel="stylesheet">
+            <link href="{% static "css/common.css" %}" rel="stylesheet">
+            <link href="{% static "css/login.css" %}" rel="stylesheet">
     </head>
     <body class="text-center">
         <div class="d-flex flex-column justify-content-between align-items-end w-100" style="min-height: 100vh;">
@@ -45,7 +46,7 @@
                             <label class="col-form-label w-100" style="font-size: 10pt"><a href="?forgotpassword">Forgot password?</a></label>
                         </div>
                     </form>
-                    <img class="p-5 align-self-center" src="../public/images/separator.png">
+                    <img class="p-5 align-self-center" src="{% static "images/separator.png" %}">
                     <form name="registration-form" class="d-flex flex-column p-2" action="login.html" method="POST">
                         <div class="form-group m-1">
                             <p class="lead text-underline w-75 mx-auto">New users</p>
