@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>        
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>FuelQuote - Update Profile</title>
+        
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>           
+
+        <link href="../public/css/common.css" rel="stylesheet">
+        <link href="../public/css/profile.css" rel="stylesheet">
+    </head>
+    <body class="text-center">
+        <div class="d-flex flex-column justify-content-between align-items-end w-100" style="min-height: 100vh;">
+                <nav class="navbar navbar-expand-md navbar-dark bg-dark w-100">
+                    <a class="navbar-brand" href="#">FuelQuote</a>  
+                    <a class="nav-item nav-link" href="./index.html">Home</a>
+                    <a class="active nav-item nav-link" href="./profile.html">Profile</a>
+                    <a class="nav-item nav-link" href="./quote_request.html">Request Quote</a>
+                    <a class="nav-item nav-link" href="./quote_history.html">View History</a>
+                    <a class="nav-item nav-link" href="./index.html">Log Out</a>
+                    <span class="ml-auto">
+                        <p class="foot mb-0 mr-1">Logged in as: $(username)</p>
+                    </span>
+                </nav>
+
+                <div class="mx-auto m-2 p-4 bg-dark flex-grow-5" style="border-radius: 10px">
+                    <!--<div class="alert alert-danger" role="alert">
+                        Could not find an account with that username and password
+                    </div>-->
+                    <div class="d-flex flex-row justify-content-between w-100">
+                        <form name="login-form" class="d-flex flex-column p-2" action="profile.html" method="POST">
+                            <div class="form-group m-1">
+                                <p class="lead mb-1 w-50 mx-auto">Update Profile</p>
+                                <p class="foot mt-0">* indicates required field</p>
+                            </div>
+                            <div class="form-group m-1">
+                                <p class="text-underline  mx-auto text-left">Personal Information</p>
+                            </div>
+                            <!--<div class="d-flex flex-row justify-content-between w-100">
+                                <div class="form-group m-1 w-50">
+                                    <label class="col-form-label w-100 text-left" for="first-name">First Name *</label><br>
+                                    <input type="text" name="first-name" class="form-control-sm" required>
+                                </div>
+                                <div class="form-group m-1 w-50">
+                                    <label class="col-form-label w-100 text-left" for="last-name">Last Name *</label><br>
+                                    <input type="text" name="last-name" class="form-control-sm" required>
+                                </div>
+                            </div>-->
+                            <div class="form-group m-1">
+                                <label class="col-form-label w-100 text-left" for="full-name">Full Name *</label><br>
+                                <input type="text" id="full-name" name="full-name" class="form-control-sm w-100" size=50 maxlength=50 required>
+                            </div>
+                            <div class="form-group m-1">
+                                <label class="col-form-label w-100 text-left" for="address-1">Address, Line 1 *</label><br>
+                                <input type="text" id="address-1" name="address-1" class="form-control-sm w-100" size=50 maxlength=100 required>
+                            </div>
+                            <div class="form-group m-1">
+                                <label class="col-form-label w-100 text-left" for="address-2">Address, Line 2</label><br>
+                                <input type="text" id="address-2" name="address-2" class="form-control-sm w-100" size=50 maxlength=100>
+                            </div>
+                            <div class="d-flex flex-row justify-content-between w-100">
+                                <div class="form-group m-1 w-50">
+                                    <label class="col-form-label w-100 text-left" for="city-name">City Name *</label><br>
+                                    <input type="text" id="city-name" name="city-name" class="form-control-sm" maxlength=100 required>
+                                </div>
+                                <div class="form-group m-1 w-50 flex-grow-1">
+                                    <label class="col-form-label w-100 text-left" for="state">State *</label><br>
+                                    <select class="form-control-sm w-100" id="state" name="state">
+                                        <option disabled selected>---</option>
+                                        <option>Alabama</option>
+                                        <option>Alaska</option>
+                                        <option>Arizona</option>
+                                        <option>Arkansas</option>
+                                        <!-- States will be filled in automatically by JS -->
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group m-1 w-50 align-self-end">
+                                <label class="col-form-label w-100 text-left ml-2" for="zip-code">ZIP Code *</label><br>
+                                <input type="number" id="zip-code" name="zip-code" class="form-control-sm ml-2" minlength=5 maxlength=9 required>
+                            </div>
+                            <div class="form-group m-1">
+                                <input type="submit" name="profile-submit" value="Update Info" class="btn btn-primary w-100 mt-3">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+        
+                <footer class="mx-auto mt-3 foot">
+                    <div>
+                        <p>Site source available on <a href="https://github.com/madisonpr94/4353FuelProject">Github</a>. By Brandon Dozier, Madison Pratt, and Kevin Vo.</p>
+                    </div>
+                </footer>
+        </div>
+    </body>
+</html>

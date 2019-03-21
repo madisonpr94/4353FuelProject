@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>        
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>FuelQuote - Quote History</title>
+        
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>           
+
+        <link href="../public/css/common.css" rel="stylesheet">
+        <link href="../public/css/history.css" rel="stylesheet">
+    </head>
+    <body class="text-center">
+        <div class="d-flex flex-column justify-content-between align-items-end w-100" style="min-height: 100vh;">
+                <nav class="navbar navbar-expand-md navbar-dark bg-dark w-100">
+                    <a class="navbar-brand" href="#">FuelQuote</a>  
+                    <a class="nav-item nav-link" href="./index.html">Home</a>
+                    <a class="nav-item nav-link" href="./profile.html">Profile</a>
+                    <a class="nav-item nav-link" href="./quote_request.html">Request Quote</a>
+                    <a class="active nav-item nav-link" href="#">View History</a>
+                    <a class="nav-item nav-link" href="./index.html">Log Out</a>
+                    <span class="ml-auto">
+                        <p class="foot mb-0 mr-1">Logged in as: $(username)</p>
+                    </span>
+                </nav>
+
+                <div class="mx-auto m-2 p-4 bg-dark flex-grow-5" style="border-radius: 10px">
+                    <!--<div class="alert alert-danger" role="alert">
+                        Could not find an account with that username and password
+                    </div>-->
+                    <div class="d-flex flex-row justify-content-between w-100">
+                        <div class="d-flex flex-column m-2">
+                            <div class="m-1 mb-3">
+                                    <p class="lead mb-1 w-100 mx-auto">Quote History</p>
+                                    <p class="foot mt-0 w-100">Showing 10 results at a time</p>
+                            </div>
+                            <div class="m-1">
+                                <table class="table table-dark table-striped my-2">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col">Order Number</th>
+                                            <th scope="col">Gallons Requested</th>
+                                            <th scope="col">Delivery Address</th>
+                                            <th scope="col">Delivery Date</th>
+                                            <th scope="col">Price per Gallon</th>
+                                            <th scope="col">Total Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>#0001</td>
+                                            <td>4500</td>
+                                            <td>123 Example St. Placeholder, AL 12345</td>
+                                            <td>02/26/2019</td>
+                                            <td>$1.71</td>
+                                            <td>$7695.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td>#0002</td>
+                                            <td>4200</td>
+                                            <td>123 Example St. Placeholder, AL 12345</td>
+                                            <td>02/28/2019</td>
+                                            <td>$1.76</td>
+                                            <td>$7392.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td>#0006</td>
+                                            <td>4650</td>
+                                            <td>123 Example St. Placeholder, AL 12345</td>
+                                            <td>03/01/2019</td>
+                                            <td>$1.68</td>
+                                            <td>$7812.00</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="d-flex flex-row justify-content-between mt-4 mx-2">
+                                <!--<p>
+                                    <a href="?prev" class="disabled-link">&lt;&lt; Previous</a>
+                                </p>
+                                <p>
+                                    <a href="?next">Next &gt;&gt;</a>
+                                </p>-->
+                                <p><a href="?t=0" class="btn btn-md btn-secondary">&lt;&lt; Previous</a></p>
+                                <p><a href="?t=10" class="btn btn-md btn-secondary">Next &gt;&gt;</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+                <footer class="mx-auto mt-3 foot">
+                    <div>
+                        <p>Site source available on <a href="https://github.com/madisonpr94/4353FuelProject">Github</a>. By Brandon Dozier, Madison Pratt, and Kevin Vo.</p>
+                    </div>
+                </footer>
+        </div>
+    </body>
+</html>
