@@ -16,15 +16,13 @@ urlpatterns += [
 # Login page
 urlpatterns += [
     path('login', views.login_page, name='login_page'),
-    path('login', views.login_page, name='login_page',
-         kwargs={'redirect_not_logged_in': True})
+    path('logout', views.logout_page, name='logout_page'),
 ]
 
 # Pricing page
 urlpatterns += [
     path('quote_request', views.quote_page, name="quote_page"),
-    path('price_module', views.price_module, name='price_module'),
-    path('checkout', views.checkout_page, name="checkout_page")
+    path('price_module', views.price_module, name='price_module')
 ]
 
 # Quote History page

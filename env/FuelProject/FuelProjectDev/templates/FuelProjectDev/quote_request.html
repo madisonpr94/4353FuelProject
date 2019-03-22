@@ -18,16 +18,16 @@
         <script>
         var updateTotal = function() {
             // Validate delivery date field
-            var datetime = new Date($("#delivery-date").val())
-            if (isNaN(datetime.getTime()) || datetime < new Date($("#delivery-date").attr('min'))) {
-                $("#delivery-date").addClass("invalid-sm");
+            var datetime = new Date($("#delivery_date").val())
+            if (isNaN(datetime.getTime()) || datetime < new Date($("#delivery_date").attr('min'))) {
+                $("#delivery_date").addClass("invalid-sm");
             } else {
-                $("#delivery-date").removeClass("invalid-sm");
+                $("#delivery_date").removeClass("invalid-sm");
             }
 
             // We send an AJAX request to ./price_module?gallons=<float>
             // Price module returns a JSON object with all the data we need to update the form
-            $.ajax({url: "./price_module?gallons=" + $("#gallons").val() + "&date=" + $("#delivery-date").val(), success: function(result) {
+            $.ajax({url: "./price_module?gallons=" + $("#gallons").val() + "&date=" + $("#delivery_date").val(), success: function(result) {
                 $("#unit-price").val("$" + result.price_per_gallon);
                 $("#total-price").val("$" + result.total_price);
                 $("#order-submit").removeClass("btn-secondary")
@@ -49,18 +49,31 @@
                     <a class="nav-item nav-link" href="profile">Profile</a>
                     <a class="active nav-item nav-link" href="#">Request Quote</a>
                     <a class="nav-item nav-link" href="quote_history">View History</a>
-                    <a class="nav-item nav-link" href="index">Log Out</a>
+                    <a class="nav-item nav-link" href="logout">Log Out</a>
                     <span class="ml-auto">
-                        <p class="foot mb-0 mr-1">Logged in as: $(username)</p>
+                        <p class="foot mb-0 mr-1">Logged in as: {{username}}</p>
                     </span>
                 </nav>
-
+                {% if form.errors %}
+                        <div class="alert alert-danger mx-auto mt-4 text-center" role="alert">
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    {{field.name}}: {{ error|escape }}<br>
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
+                {% endif %}
+                {% if order_success %}
+                        <div class="alert alert-info mx-auto mt-4 text-center" role="alert">
+                            Purchase successful!
+                        </div>
+                {% endif %}
                 <div class="mx-auto m-2 p-4 bg-dark flex-grow-5" style="border-radius: 10px">
-                    <!--<div class="alert alert-danger" role="alert">
-                        Could not find an account with that username and password
-                    </div>-->
+
                     <div class="d-flex flex-row justify-content-between w-100">
-                        <form name="login-form" class="d-flex flex-column p-2" action="checkout" method="POST">
+
+                        <form name="login-form" class="d-flex flex-column p-2" action="quote_request" method="POST">
+                            {% csrf_token %}
                             <div class="form-group m-1">
                                 <p class="lead mb-1 w-50 mx-auto">Request Quote</p>
                                 <p class="foot mt-0">* indicates required field</p>
@@ -68,11 +81,11 @@
                             <div class="d-flex flex-row justify-content-between w-100">
                                 <div class="form-group m-1 w-50">
                                     <label class="col-form-label w-100 text-left" for="gallons">Gallons Requested: *</label><br>
-                                    <input type="number" id="gallons" name="gallons" class="form-control-sm w-100" value=10 min=10 oninput="updateTotal()" required>
+                                    <input type="number" id="gallons" name="gallons" class="form-control-sm w-100" value={{gallons}} min=10 max=1000000 oninput="updateTotal()" required>
                                 </div>
-                                <div class="form-group m-1 w-50" style="position:relative">
-                                    <label class="col-form-label w-100 text-left" for="delivery-date">Delivery Date *</label><br>
-                                    <input type="date" id="delivery-date" name="delivery-date" class="form-control-sm w-100" value='{{ delivery_date | date:"Y-m-d" }}' min='{{ delivery_date | date:"Y-m-d" }}' oninput="updateTotal()" required>
+                                <div class="form-group m-1 w-50">
+                                    <label class="col-form-label w-100 text-left" for="delivery_date">Delivery Date *</label><br>
+                                    <input type="date" id="delivery_date" name="delivery_date" class="form-control-sm w-100" value='{{ delivery_date | date:"Y-m-d" }}' min='{{ delivery_date | date:"Y-m-d" }}' oninput="updateTotal()" required>
                                 </div>
                             </div>
                             <div class="form-group m-1 mt-4">
@@ -80,42 +93,38 @@
                             </div>
                             <div class="form-group m-1">
                                 <label class="col-form-label w-100 text-left" for="address-1">Address, Line 1</label><br>
-                                <input type="text" id="address-1" name="address-1" class="form-control-sm w-100" size=50 maxlength=100 required disabled readonly value="123 Example St.">
+                                <input type="text" id="address-1" name="address-1" class="form-control-sm w-100" size=50 maxlength=100 required disabled readonly value='{{ user_addr_line1 }}'>
                             </div>
                             <div class="form-group m-1">
                                 <label class="col-form-label w-100 text-left" for="address-2">Address, Line 2</label><br>
-                                <input type="text" id="address-2" name="address-2" class="form-control-sm w-100" size=50 maxlength=100 disabled readonly>
+                                <input type="text" id="address-2" name="address-2" class="form-control-sm w-100" size=50 maxlength=100 disabled readonly value='{{ user_addr_line2 }}'>
                             </div>
                             <div class="d-flex flex-row justify-content-between w-100">
                                 <div class="form-group m-1 w-50">
                                     <label class="col-form-label w-100 text-left" for="city-name">City Name</label><br>
-                                    <input type="text" id="city-name" name="city-name" class="form-control-sm" required maxlength=100 disabled readonly value="Placeholder">
+                                    <input type="text" id="city-name" name="city-name" class="form-control-sm" required maxlength=100 disabled readonly value='{{ user_addr_city }}'>
                                 </div>
                                 <div class="form-group m-1 w-50 flex-grow-1">
                                     <label class="col-form-label w-100 text-left" for="state">State</label><br>
                                     <select class="form-control-sm w-100" name="state" disabled readonly>
-                                        <option>Alabama</option>
-                                        <option>Alaska</option>
-                                        <option>Arizona</option>
-                                        <option>Arkansas</option>
-                                        <!-- States will be filled in automatically by JS -->
+                                        <option selected>{{ user_addr_state }}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group m-1 w-50 align-self-end">
                                 <label class="col-form-label w-100 text-left ml-2" for="zip-code">ZIP Code</label><br>
-                                <input type="text" name="zip-code" class="form-control-sm ml-2" minlength=5 maxlength=9 disabled readonly value=12345>
+                                <input type="text" name="zip-code" class="form-control-sm ml-2" minlength=5 maxlength=9 disabled readonly value='{{ user_addr_zip }}'>
                             </div>
                             <div class="form-group m-1 mt-4">
                                 <p class="text-underline mx-auto text-left">Pricing Information</p>
                             </div>
                             <div class="d-flex flex-row justify-content-between w-100">
                                 <div class="form-group m-1 w-50">
-                                    <label class="col-form-label w-100 text-left" for="unit-price">Estimated Price per Gallon</label><br>
+                                    <label class="col-form-label w-100 text-left" for="unit-price">Price per Gallon</label><br>
                                     <input type="text" id="unit-price" name="unit-price" class="form-control-sm w-100" required disabled value="">
                                 </div>
                                 <div class="form-group m-1 w-50">
-                                    <label class="col-form-label w-100 text-left" for="total-price">Estimated Total</label><br>
+                                    <label class="col-form-label w-100 text-left" for="total-price">Total</label><br>
                                     <input type="text" id="total-price" name="total-price" class="form-control-sm w-100" required disabled value="">
                                 </div>
                             </div>

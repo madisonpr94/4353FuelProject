@@ -12,8 +12,7 @@ def price_module(request):
 
     delta = delivery_date - datetime.today()
     if delta.days < 1:
-        return HttpResponse('', status_code='500',
-                            reason_phrase="Invalid date")
+        return HttpResponse(None, status='500')
 
     # Placeholder! Replace with pricing module in Assignment 4
     price_per_gallon = round(1.71 + (0.05 * delta.days), 2)
