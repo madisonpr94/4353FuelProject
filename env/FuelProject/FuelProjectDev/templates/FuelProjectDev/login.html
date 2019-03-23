@@ -27,6 +27,7 @@
                 </div>-->
                 <div class="d-flex flex-row justify-content-between w-100">
                     <form name="login-form" class="d-flex flex-column p-2" action="login.html" method="POST">
+                        {% csrf_token %}
                         <div class="form-group m-1">
                             <p class="lead text-underline w-75 mx-auto">Existing users</p>
                         </div>
@@ -47,6 +48,7 @@
                     </form>
                     <img class="p-5 align-self-center" src="../public/images/separator.png">
                     <form name="registration-form" class="d-flex flex-column p-2" action="login.html" method="POST">
+                        {% csrf_token %}
                         <div class="form-group m-1">
                             <p class="lead text-underline w-75 mx-auto">New users</p>
                         </div>
