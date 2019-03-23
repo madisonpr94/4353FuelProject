@@ -1,18 +1,10 @@
-from django.shortcuts import render, redirect, render_to_response
-from django.http import *
-from django.template import Context, loader, RequestContext
+from django.shortcuts import render
+from django.http import HttpResponse
+from django.template import Context, loader
 from django.contrib.auth import authenticate, login, logout
-
-# Create your views here.
-
-def index_page(request):
-    return render(request, 'FuelProjectDev/index.html')
 
 def login_page(request):
     return render(request, 'FuelProjectDev/login.html')
-
-def profile_page(request):
-    return render(request, 'FuelProjectDev/profile.html')
 
 def check_login(request):
     if request.POST:
@@ -23,7 +15,3 @@ def check_login(request):
             if user.is_active:
                 return render(request, 'FuelProjectDev/profile.html')
     return render(request, 'FuelProjectDev/index.html')
-
-
-    
-    
