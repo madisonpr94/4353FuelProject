@@ -30,7 +30,7 @@
                 </div>
                 {% endif %}
                 <div class="d-flex flex-row justify-content-between w-100">
-                    <form name="login-form" class="d-flex flex-column p-2" action="login" method="POST">
+                    <form name="login-form" class="d-flex flex-column p-2" action="{{ action }}" method="POST">
                         {% csrf_token %}
                         <div class="form-group m-1">
                             <p class="lead text-underline w-75 mx-auto">Existing users</p>

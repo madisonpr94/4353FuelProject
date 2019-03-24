@@ -1,12 +1,14 @@
 from django.shortcuts import render, reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import Context, loader
+from django.contrib.auth.decorators import login_required
 from datetime import datetime, timedelta
 
 from .util import *
 from .forms.quote_form import QuoteForm
 
 
+@login_required
 def quote_page(request):
     # Redirect if user not logged in
     # Disabled until login implemented

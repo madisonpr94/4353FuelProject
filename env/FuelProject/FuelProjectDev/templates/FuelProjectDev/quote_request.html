@@ -27,7 +27,12 @@
 
             // We send an AJAX request to ./price_module?gallons=<float>
             // Price module returns a JSON object with all the data we need to update the form
-            $.ajax({url: "./price_module?gallons=" + $("#gallons").val() + "&date=" + $("#delivery_date").val(), success: function(result) {
+            $.ajax({url: "./price_module?gallons=" + $("#gallons").val() + "&date=" + $("#delivery_date").val(), success: function(result, status, xhr) {
+                var ct = xhr.getResponseHeader("content-type") || "";
+                if (ct.indexOf('html') > -1) {
+                    // We were redirected to an HTML page; The user probably became logged out mid-session
+                    window.location.replace("{% url 'login_page' %}?next={% url 'quote_page' %}")
+                }
                 $("#unit-price").val("$" + result.price_per_gallon);
                 $("#total-price").val("$" + result.total_price);
                 $("#order-submit").removeClass("btn-secondary")
