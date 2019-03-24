@@ -5,8 +5,7 @@ from . import views
 # Index / Landing page
 urlpatterns = [
     path('', views.index_page, name='index_page'),
-    path('index', views.index_page, name='index_page'),
-    url(r'^login/index', views.index_page, name='index_page'),
+    path('index', views.index_page, name='index_page')
 ]
 
 # Profile page
@@ -16,7 +15,7 @@ urlpatterns += [
 
 # Login page
 urlpatterns += [
-    url('login', views.login_page, name='login_page'),
+    path('login', views.login_page, name='login_page'),
     path('logout', views.logout_page, name='logout_page'),
 ]
 
@@ -28,5 +27,5 @@ urlpatterns += [
 
 # Quote History page
 urlpatterns += [
-    url('quote_history', views.history_page, name='history_page')
+    path('quote_history', views.history_page, name='history_page')
 ]
