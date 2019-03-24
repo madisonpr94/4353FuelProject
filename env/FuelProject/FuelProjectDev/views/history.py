@@ -4,4 +4,4 @@ from django.template import Context, loader
 
 
 def history_page(request):
-    return render(request, 'FuelProjectDev/history.html')
+    return render(request, 'FuelProjectDev/quote_history.html')
