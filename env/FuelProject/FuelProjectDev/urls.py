@@ -27,5 +27,5 @@ urlpatterns += [
 
 # Quote History page
 urlpatterns += [
-    path('quote_history', views.history_page, name='history_page')
+    path('order_history', views.history_page, name='history_page')
 ]
