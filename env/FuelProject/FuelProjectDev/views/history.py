@@ -31,7 +31,6 @@ def create_random_entry(n):  # Create entries for page testing
 def history_page(request):
     context = {}
     context["t"] = 0
-    context["username"] = request.user.username
 
     if "t" in request.GET:
         context["t"] = int(request.GET["t"])

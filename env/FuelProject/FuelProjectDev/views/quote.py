@@ -55,8 +55,5 @@ def quote_page(request):
     context['user_addr_state'] = "Texas"
     context['user_addr_zip'] = "77383"
 
-    # User account info
-    context['username'] = request.user.username
-
     return render(request, 'FuelProjectDev/quote_request.html', context,
                   content_type='text/html')
