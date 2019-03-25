@@ -4,6 +4,12 @@ from django.template import Context, loader
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 
+msg_login_error = "Invalid username or password."
+msg_must_log_in = "You must log in first."
+msg_password_mismatch = "Passwords do not match."
+msg_username_unavail = "That username is unavailable."
+msg_register_success = "Registration successful. Please log in."
+
 
 def login_page(request):
     if check_login(request):
@@ -12,7 +18,7 @@ def login_page(request):
         return HttpResponseRedirect('profile')
 
     else:
-        context = {}
+        context = {"msg_register_success": msg_register_success}
 
         reg_chk = check_register(request)
         if reg_chk[0]:
@@ -24,13 +30,13 @@ def login_page(request):
         else:
             if request.POST:  # Login form submitted
                 context["login_error"] = True
-                context["error_msg"] = "Invalid username or password."
+                context["error_msg"] = msg_login_error
 
         context["action"] = "login"
         if "next" in request.GET:
             context["action"] += "?next=" + request.GET["next"]
             context["login_error"] = True
-            context["error_msg"] = "You must log in first."
+            context["error_msg"] = msg_must_log_in
 
         return render(request, 'FuelProjectDev/login.html', context)
 
@@ -53,17 +59,19 @@ def check_register(request):
     # (Registration Success, (Registration Error, Error Message))
 
     if request.POST:
-        if "username-register" and "password-register" and "password-confirm" in request.POST:
+        if all(x in request.POST for x in ['username-register',
+                                           'password-register',
+                                           'password-confirm']):
             username = request.POST['username-register']
             password = request.POST['password-register']
             password_confirm = request.POST['password-confirm']
 
             if password != password_confirm:
-                return (False, (True, "Passwords do not match."))
+                return (False, (True, msg_password_mismatch))
 
             if User.objects.filter(username=username).exists():
                 # Username already exists
-                return (False, (True, "That username is unavailable."))
+                return (False, (True, msg_username_unavail))
 
             user = User.objects.create_user(username, None, password)
             user.save()

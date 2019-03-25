@@ -4,19 +4,17 @@ from django.template import Context, loader
 from django.contrib.auth.decorators import login_required
 from datetime import datetime, timedelta
 
-from .util import *
 from .forms.quote_form import QuoteForm
 
+msg_submit_success = "Purchase successful!"
 
+
+# Redirect if user not logged in
 @login_required
 def quote_page(request):
-    # Redirect if user not logged in
-    # Disabled until login implemented
-    """if not request.user.is_authenticated:
-        return redirect_with_GET('login_page',
-                                 kwargs={"redirect_not_logged_in": True})"""
-
     context = {}
+
+    context["msg_submit_success"] = msg_submit_success
 
     # Check for form POST data
     if request.method == 'POST':

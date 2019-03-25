@@ -8,13 +8,15 @@ import json
 
 @login_required
 def price_module(request):
+    if not all(x in request.GET for x in ['gallons', 'date']):
+        return HttpResponse(None, status='400')
 
     gallons = float(request.GET["gallons"])
     delivery_date = datetime.strptime(request.GET["date"], "%Y-%m-%d")
 
     delta = delivery_date - datetime.today()
     if delta.days < 1:
-        return HttpResponse(None, status='500')
+        return HttpResponse(None, status='400')
 
     # Placeholder! Replace with pricing module in Assignment 4
     price_per_gallon = round(1.71 + (0.05 * delta.days), 2)
