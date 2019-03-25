@@ -33,7 +33,7 @@
                         Could not find an account with that username and password
                     </div>-->
                     <div class="d-flex flex-row justify-content-between w-100">
-                        <form name="login-form" class="d-flex flex-column p-2" action="profile" method="POST">
+                        <form name="login-form" class="d-flex flex-column p-2" action="profile" method="POST"> {% csrf_token %}
                             <div class="form-group m-1">
                                 <p class="lead mb-1 w-50 mx-auto">Update Profile</p>
                                 <p class="foot mt-0">* indicates required field</p>
@@ -52,42 +52,41 @@
                                 </div>
                             </div>-->
                             <div class="form-group m-1">
-                                <label class="col-form-label w-100 text-left" for="full-name">Full Name *</label><br>
-                                <input type="text" id="full-name" name="full-name" class="form-control-sm w-100" size=50 maxlength=50 required>
+                                <label class="col-form-label w-100 text-left" for="full_name">Full Name *</label><br>
+                                <input type="text" id="full_name" name="full_name" class="form-control-sm w-100" size=50 maxlength=50 required value='{{ full_name}}'>
                             </div>
                             <div class="form-group m-1">
-                                <label class="col-form-label w-100 text-left" for="address-1">Address, Line 1 *</label><br>
-                                <input type="text" id="address-1" name="address-1" class="form-control-sm w-100" size=50 maxlength=100 required>
+                                <label class="col-form-label w-100 text-left" for="address_1">Address, Line 1 *</label><br>
+                                <input type="text" id="address_1" name="address_1" class="form-control-sm w-100" size=50 maxlength=100 required value = '{{ address_1 }}'>
                             </div>
                             <div class="form-group m-1">
-                                <label class="col-form-label w-100 text-left" for="address-2">Address, Line 2</label><br>
-                                <input type="text" id="address-2" name="address-2" class="form-control-sm w-100" size=50 maxlength=100>
+                                <label class="col-form-label w-100 text-left" for="address_2">Address, Line 2</label><br>
+                                <input type="text" id="address_2" name="address_2" class="form-control-sm w-100" size=50 maxlength=100 value ='{{ address_2 }}'>
                             </div>
                             <div class="d-flex flex-row justify-content-between w-100">
                                 <div class="form-group m-1 w-50">
-                                    <label class="col-form-label w-100 text-left" for="city-name">City Name *</label><br>
-                                    <input type="text" id="city-name" name="city-name" class="form-control-sm" maxlength=100 required>
+                                    <label class="col-form-label w-100 text-left" for="city_name">City Name *</label><br>
+                                    <input type="text" id="city_name" name="city_name" class="form-control-sm" maxlength=100 required value = '{{ city_name }}'>
                                 </div>
                                 <div class="form-group m-1 w-50 flex-grow-1">
                                     <label class="col-form-label w-100 text-left" for="state">State *</label><br>
                                     <select class="form-control-sm w-100" id="state" name="state">
                                         <option disabled selected>---</option>
-                                        <option>Alabama</option>
-                                        <option>Alaska</option>
-                                        <option>Arizona</option>
-                                        <option>Arkansas</option>
-                                        <!-- States will be filled in automatically by JS -->
+                                        {% for state in states %}
+                                        <option value='{{ state }}'>{{ state }}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group m-1 w-50 align-self-end">
-                                <label class="col-form-label w-100 text-left ml-2" for="zip-code">ZIP Code *</label><br>
-                                <input type="number" id="zip-code" name="zip-code" class="form-control-sm ml-2" minlength=5 maxlength=9 required>
+                                <label class="col-form-label w-100 text-left ml-2" for="zip_code">ZIP Code *</label><br>
+                                <input type="number" id="zip_code" name="zip_code" class="form-control-sm ml-2" minlength=5 maxlength=9 required value='{{ zip_code }}'>
                             </div>
                             <div class="form-group m-1">
                                 <input type="submit" name="profile-submit" value="Update Info" class="btn btn-primary w-100 mt-3">
                             </div>
                         </form>
+                        
                     </div>
                 </div>
         
