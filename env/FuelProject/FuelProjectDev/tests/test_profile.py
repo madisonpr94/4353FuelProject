@@ -30,3 +30,18 @@ class ProfileTest(TestCase):
         response = profile_page(request)
 
         self.assertEquals(response.status_code, 302)
+
+    def test_submitProfile(self):
+        response = self.client.post("/profile", {
+            "full_name": "Gary Smith",
+            "address_1": "4392 Post Oak Avenue",
+            "address_2": "",
+            "city_name": "Houston",
+            "state": "Texas",
+            "zip_code": "77503",
+        })
+
+        content = response.content.decode(response.charset)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertInHTML("<option selected>Texas</option>", content)
