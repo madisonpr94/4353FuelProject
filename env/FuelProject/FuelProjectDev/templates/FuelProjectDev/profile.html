@@ -71,9 +71,18 @@
                                 <div class="form-group m-1 w-50 flex-grow-1">
                                     <label class="col-form-label w-100 text-left" for="state">State *</label><br>
                                     <select class="form-control-sm w-100" id="state" name="state">
+                                        {% if state == "none" %}
                                         <option disabled selected>---</option>
-                                        {% for state in states %}
-                                        <option value='{{ state }}'>{{ state }}</option>
+                                        {% else %}
+                                        <option disabled>---</option>
+                                        {% endif %}
+                                     
+                                        {% for s in states %}
+                                        {% if s == state %}
+                                        <option selected>{{ s }}</option>
+                                        {% else %}
+                                        <option>{{ s }}</option>
+                                        {% endif %}
                                         {% endfor %}
                                     </select>
                                 </div>

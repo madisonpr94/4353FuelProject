@@ -20,16 +20,17 @@ def profile_page(request):
     "West Virginia", "Wisconsin", "Wyoming"
     ]
     context["states"] = states
+    context["state"] = "none"
 
     if request.method == 'POST':
         
-        context["full_name"] = request.POST['full_name'],
-        context["address_1"] = request.POST['address_1'],
-        context["address_2"] = request.POST['address_2'],
-        context["city_name"] = request.POST['city_name'],
+        context["full_name"] = request.POST['full_name']
+        context["address_1"] = request.POST['address_1']
+        context["address_2"] = request.POST['address_2']
+        context["city_name"] = request.POST['city_name']
         
-        context["state"] = request.POST['state'],
-        context["zip_code"] = request.POST['zip_code'],
-    
+        context["state"] = request.POST['state']
+        context["zip_code"] = request.POST['zip_code']
+    print(context["state"]) 
 
     return render(request, 'FuelProjectDev/profile.html', context, content_type='text/html')
