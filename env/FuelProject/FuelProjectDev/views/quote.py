@@ -5,6 +5,9 @@ from django.contrib.auth.decorators import login_required
 from datetime import datetime, timedelta
 
 from .forms.quote_form import QuoteForm
+from .pricing import get_price
+from ..models.profile_info import ProfileInfo
+from ..models.past_order import PastOrder
 
 msg_submit_success = "Purchase successful!"
 
@@ -22,13 +25,43 @@ def quote_page(request):
 
         form = QuoteForm(request.POST)  # Form validation
 
-        gallons = form['gallons'].value()
-        date = form['delivery_date'].value()
+        gallons = float(form['gallons'].value())
+        date = datetime.strptime(form['delivery_date'].value(), "%Y-%m-%d")
 
         if form.is_valid():
             context["order_success"] = True
-            # To Do: Add order history to user account (Assignment 4)
 
+            # Fetch profile info
+            try:
+                profile = ProfileInfo.objects.get(user_id=request.user.id)
+                past_orders = len(
+                    PastOrder.objects.filter(user_id=request.user.id)
+                )
+            except ProfileInfo.DoesNotExist:
+                return HttpResponse(None, status='500')
+
+            # Format address for order history
+            full_address = (profile.address_line_1 + " " +
+                            (profile.address_line_2 + " "
+                                if profile.address_line_2 != "" else "") +
+                            profile.city_name + ", " + profile.state +
+                            " " + profile.zip_code)
+
+            if len(full_address) >= 50:
+                full_address = full_address[:47] + "..."
+
+            # Fetch price info: Do not trust submitted form!
+            prices = get_price(gallons, date, profile, past_orders)
+
+            # Add order to user's order history
+            PastOrder.objects.create(
+                user_id=request.user.id,
+                gallons=gallons,
+                delivery_addr=full_address,
+                delivery_date=date,
+                unit_price=prices[0],
+                total_price=prices[1]
+            )
         else:
             context["form"] = form
 
@@ -46,12 +79,18 @@ def quote_page(request):
         context['delivery_date'] = datetime.strptime(
             context['form']['delivery_date'].value(), "%Y-%m-%d")
 
-    # Placeholder account info - Replace by database entry in Assignment 4
-    context['user_addr_line1'] = "123 Example St."
-    context['user_addr_line2'] = ""
-    context['user_addr_city'] = "Spring"
-    context['user_addr_state'] = "Texas"
-    context['user_addr_zip'] = "77383"
+    # Fetch user account info
+    user_id = request.user.id
+    try:
+        user_profile = ProfileInfo.objects.get(user_id=user_id)
+        context['user_addr_line1'] = user_profile.address_line_1
+        context['user_addr_line2'] = user_profile.address_line_2
+        context['user_addr_city'] = user_profile.city_name
+        context['user_addr_state'] = user_profile.state
+        context['user_addr_zip'] = user_profile.zip_code
+    except ProfileInfo.DoesNotExist:
+        # If user has not completed their profile, redirect them with a prompt
+        return HttpResponseRedirect("/profile?order_needs_profile")
 
     return render(request, 'FuelProjectDev/quote_request.html', context,
                   content_type='text/html')

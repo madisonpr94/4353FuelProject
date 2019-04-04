@@ -1,5 +1,9 @@
-*.pyc
 .vscode/
-*/__pycache__/*
+__pycache__/
+env/lib/
+env/include/
+env/bin
+migrations/
 .DS_Store
 .coverage
+.pyc

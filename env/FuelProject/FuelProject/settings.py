@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'FuelProjectDev',  # Added Line
 ]
 
@@ -125,5 +126,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Defines login page URL for redirects (@login_required)
-
 LOGIN_URL = '/login'
+
+# Automatically logs the user out after 30 minutes
+SESSION_COOKIE_AGE = 1800

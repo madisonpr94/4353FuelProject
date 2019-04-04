@@ -20,6 +20,9 @@
                 <a class="navbar-brand" href="#">FuelQuote</a>  
                 <a class="active nav-item nav-link" href="{% url 'index_page' %}">Home</a>
                 {% if user.is_authenticated %}
+                <a class="nav-item nav-link" href="{% url 'profile_page' %}">Profile</a>
+                <a class="nav-item nav-link" href="{% url 'quote_page' %}">Request Quote</a>
+                <a class="nav-item nav-link" href="{% url 'history_page' %}">View History</a>
                 <a class="nav-item nav-link" href="{% url 'logout_page' %}">Log Out</a>
                 <span class="ml-auto">
                     <p class="foot mb-0 mr-1">Logged in as: {{ user.username }}</p>

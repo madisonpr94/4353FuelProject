@@ -1,30 +1,15 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import Context, loader
+from django.template.defaulttags import register
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+
 import random
 
+from ..models.past_order import PastOrder
 
-def create_random_entry(n):  # Create entries for page testing
-    # This will be replaced with database lookup in Assignment 4
-    num = n
-
-    gallons = random.randrange(500, 25000, step=100)
-
-    address = str(random.randrange(10, 9999))
-    address += " Example St. Houston, TX 77024"
-
-    delivery_date = str(random.randrange(1, 12)) + "/"
-    delivery_date += str(random.randrange(1, 31)) + "/"
-    delivery_date += str(random.randrange(2020, 2024))
-
-    price_per_gallon = (1 + (2 * random.random()))
-    total_price = "$" + '{0:.2f}'.format(gallons * price_per_gallon)
-    price_per_gallon = "$" + '{0:.2f}'.format(price_per_gallon)
-
-    entry = (str(num), str(gallons), address, delivery_date, price_per_gallon,
-             total_price)
-    return entry
+msg_no_entries = "No order history was found."
 
 
 @login_required
@@ -40,11 +25,25 @@ def history_page(request):
     context["prevT"] = max(context["t"] - itemsPerPage, 0)
     context["nextT"] = context["t"] + itemsPerPage
 
-    models = []
-    for i in range(50):
-        entry = create_random_entry(i)
-        models.append(entry)
+    try:
+        if request.user.has_perm('FuelProjectDev.admin_rights'):
+            models = PastOrder.objects.all()
+        else:
+            models = PastOrder.objects.filter(
+                user_id=request.user.id).order_by("id")
+    except PastOrder.DoesNotExist:
+        models = []
 
+    if len(models) == 0:
+        context["no_entries"] = True
+        context["msg_no_entries"] = msg_no_entries
+
+    usernames = {}
+    for m in models:
+        if m.user_id not in usernames.keys():
+            usernames[m.user_id] = User.objects.get(id=m.user_id).username
+
+    context['usernames'] = usernames
     context["canSeekNext"] = (context["nextT"] < len(models))
     context["entries"] = models[context["t"]:context["nextT"]]
 
@@ -52,3 +51,8 @@ def history_page(request):
         context["nextT"] = context["t"]
 
     return render(request, 'FuelProjectDev/order_history.html', context)
+
+
+@register.filter
+def get_item(dict, key):
+    return dict.get(key)

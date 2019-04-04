@@ -1,4 +1,4 @@
-{% load static %}
+{% load static humanize %}
 <!DOCTYPE html>
 <html>
     <head>        
@@ -35,7 +35,10 @@
                                     <p class="lead mb-1 w-100 mx-auto">Quote History</p>
                                     <p class="foot mt-0 w-100">Showing 10 results at a time</p>
                             </div>
-                            <div class="m-1">
+                            <div class="m-1" style="min-width: 50vw;">
+                                {% if no_entries %}
+                                <p>{{ msg_no_entries }}</p>
+                                {% else %}
                                 <table class="table table-dark table-striped my-2">
                                     <thead class="thead-dark">
                                         <tr>
@@ -45,21 +48,24 @@
                                             <th scope="col">Delivery Date</th>
                                             <th scope="col">Price per Gallon</th>
                                             <th scope="col">Total Price</th>
+                                            <th scope="col">Username</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for id, gallons, address, date, price, total in entries %}
+                                        {% for record in entries %}
                                             <tr>
-                                                <td>#{{ id }}</td>
-                                                <td>{{ gallons }}</td>
-                                                <td>{{ address }}</td>
-                                                <td>{{ date }}</td>
-                                                <td>{{ price }}</td>
-                                                <td>{{ total }}</td>
+                                                <td>#{{ record.id }}</td>
+                                                <td>{{ record.gallons }}</td>
+                                                <td>{{ record.delivery_addr }}</td>
+                                                <td>{{ record.delivery_date }}</td>
+                                                <td>${{ record.unit_price|floatformat:2 }}</td>
+                                                <td>${{ record.total_price|floatformat:2 }}</td>
+                                                <td>{{ usernames|get_item:record.user_id }}</td>
                                             </tr>
                                         {% endfor %}
                                     </tbody>
                                 </table>
+                                {% endif %}
                             </div>
                             <div class="d-flex flex-row justify-content-between mt-4 mx-2">
                                 <p><a href="?t={{ prevT }}" class="btn btn-md {% if t == 0 %}btn-secondary{% else %}btn-primary{% endif %}">&lt;&lt; Previous</a></p>

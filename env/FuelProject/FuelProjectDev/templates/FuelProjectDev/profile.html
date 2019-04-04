@@ -27,11 +27,21 @@
                         <p class="foot mb-0 mr-1">Logged in as: {{ user.username }}</p>
                     </span>
                 </nav>
-
+                {% if incomplete_profile %}
+                        <div class="alert alert-danger mx-auto mt-4 text-center" role="alert">
+                            {{ msg_update_profile }}
+                        </div>
+                {% endif %}
+                {% if profile_updated %}
+                        <div class="alert alert-info mx-auto mt-4 text-center" role="alert">
+                            {{ msg_profile_updated }}
+                        </div>
+                {% endif %}
                 <div class="mx-auto m-2 p-4 bg-dark flex-grow-5" style="border-radius: 10px">
                     <!--<div class="alert alert-danger" role="alert">
                         Could not find an account with that username and password
                     </div>-->
+
                     <div class="d-flex flex-row justify-content-between w-100">
                         <form name="login-form" class="d-flex flex-column p-2" action="profile" method="POST"> {% csrf_token %}
                             <div class="form-group m-1">
@@ -89,7 +99,7 @@
                             </div>
                             <div class="form-group m-1 w-50 align-self-end">
                                 <label class="col-form-label w-100 text-left ml-2" for="zip_code">ZIP Code *</label><br>
-                                <input type="number" id="zip_code" name="zip_code" class="form-control-sm ml-2" minlength=5 maxlength=9 required value='{{ zip_code }}'>
+                                <input type="tel" pattern="[0-9]*" id="zip_code" name="zip_code" class="form-control-sm ml-2" minlength=5 maxlength=9 required value='{{ zip_code }}'>
                             </div>
                             <div class="form-group m-1">
                                 <input type="submit" name="profile-submit" value="Update Info" class="btn btn-primary w-100 mt-3">

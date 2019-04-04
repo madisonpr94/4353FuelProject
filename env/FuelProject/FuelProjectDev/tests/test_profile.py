@@ -2,6 +2,7 @@ from django.contrib.auth.models import AnonymousUser, User
 from django.test import RequestFactory, TestCase, Client
 
 from ..views.profile import *
+from ..models.profile_info import ProfileInfo
 
 
 class ProfileTest(TestCase):
@@ -12,6 +13,16 @@ class ProfileTest(TestCase):
                                              None,
                                              'secret')
         self.user.save()
+
+        self.user_profile = ProfileInfo.objects.create(
+            user_id=self.user.id,
+            full_name="Test User",
+            address_line_1="123 Example St.",
+            address_line_2="",
+            city_name="Mobile",
+            state="Alabama",
+            zip_code="12345"
+        )
 
         self.client.login(username='test_user', password='secret')
 

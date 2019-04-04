@@ -4,6 +4,7 @@ from django.urls import reverse
 import re
 
 from ..views.pricing import price_module
+from ..models.profile_info import ProfileInfo
 
 
 class PricingTest(TestCase):
@@ -11,6 +12,16 @@ class PricingTest(TestCase):
         self.factory = RequestFactory()
         self.user = User.objects.create_user(username='test_user',
                                              email=None, password='secret')
+
+        self.user_profile = ProfileInfo.objects.create(
+            user_id=self.user.id,
+            full_name="Test User",
+            address_line_1="123 Example St.",
+            address_line_2="",
+            city_name="Mobile",
+            state="Alabama",
+            zip_code="12345"
+        )
 
     def test_returns200IfAuth(self):
         request = self.factory.get('/price_module?gallons=20&date=2020-12-31')

@@ -5,7 +5,6 @@ from django.contrib.auth import authenticate, login, logout
 
 
 def logout_page(request):
-    # To Do: Clear user session and ensure user is completely logged out
     logout(request)
 
     return HttpResponseRedirect("index")
