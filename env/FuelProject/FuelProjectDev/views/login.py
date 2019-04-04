@@ -43,7 +43,7 @@ def login_page(request):
 
 def check_login(request):
     if request.POST:
-        if "username" and "password" in request.POST:
+        if all(x in request.POST for x in ['username', 'password']):
             username = request.POST['username']
             password = request.POST['password']
             user = authenticate(request, username=username, password=password)
