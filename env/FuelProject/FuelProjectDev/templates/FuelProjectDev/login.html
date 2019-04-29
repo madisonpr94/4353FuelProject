@@ -33,7 +33,7 @@
                 <a class="active nav-item nav-link" href="{% url 'login_page' %}">Login</a>
             </nav>
 
-            <div class="mx-auto p-4 bg-dark" style="border-radius: 10px">
+            <div class="mx-auto p-4 bg-dark" style="border-radius: 10px; min-width: 30vw">
                 {% if login_error %}
                 <div class="alert alert-danger" role="alert">
                     {{ error_msg }}
@@ -44,11 +44,11 @@
                     {{ msg_register_success }}
                 </div>
                 {% endif %}
-                <div class="d-flex flex-row justify-content-between w-100">
+                <div class="d-flex flex-row justify-content-center w-100">
                     <form id="login-form" name="login-form" class="d-flex flex-column p-2" action="{{ action }}" method="POST">
                         {% csrf_token %}
                         <div class="form-group m-1">
-                            <p class="lead text-underline w-75 mx-auto">Existing users</p>
+                            <p class="lead text-underline w-100 mx-auto">Existing users</p>
                         </div>
                         <div class="form-group m-1">
                             <label class="col-form-label w-100 text-left" for="username">Username</label><br>
@@ -61,15 +61,12 @@
                         <div class="form-group m-1">
                             <input type="submit" name="login-submit" value="Log In" class="btn btn-primary w-100 mt-3">
                         </div>
-                        <div class="form-group m-1">
-                            <label class="col-form-label w-100" style="font-size: 10pt"><a href="?forgotpassword">Forgot password?</a></label>
-                        </div>
                     </form>
-                    <img class="p-5 align-self-center" src="{% static "images/separator.png" %}">
+                    <img class="p-5 m-3 align-self-center" src="{% static "images/separator.png" %}">
                     <form id="registration-form" name="registration-form" class="d-flex flex-column p-2" action="login" method="POST">
                         {% csrf_token %}
                         <div class="form-group m-1">
-                            <p class="lead text-underline w-75 mx-auto">New users</p>
+                            <p class="lead text-underline w-100 mx-auto">New users</p>
                         </div>
                         <div class="form-group m-1">
                             <label class="col-form-label w-100 text-left" for="username-register">Username</label><br>

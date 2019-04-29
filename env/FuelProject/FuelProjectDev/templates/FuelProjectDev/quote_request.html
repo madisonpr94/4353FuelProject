@@ -51,10 +51,17 @@
         }
 
         var infoChanged = function() {
-            $("#order-submit").addClass("btn-secondary")
-            $("#order-submit").attr("disabled", true)
-            $("#price-update").removeClass("btn-secondary")
-            $("#price-update").attr("disabled", false)
+            if ($("#delivery_date").val() && $("#gallons").val()) {
+                $("#order-submit").addClass("btn-secondary")
+                $("#order-submit").attr("disabled", true)
+                $("#price-update").removeClass("btn-secondary")
+                $("#price-update").attr("disabled", false)
+            } else {
+                $("#order-submit").addClass("btn-secondary")
+                $("#order-submit").attr("disabled", true)
+                $("#price-update").addClass("btn-secondary")
+                $("#price-update").attr("disabled", true)
+            }
         }
         </script>
     </head>
